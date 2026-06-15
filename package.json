@@ -1,15 +1,27 @@
 {
   "name": "@mutual-processadora-de-pagamentos/lib-ui",
-  "version": "0.1.0",
-  "description": "Design System compartilhado da Mutual Pay — tokens (Fase 0) e, futuramente, primitivos.",
+  "version": "0.2.0",
+  "description": "Design System compartilhado da Mutual Pay — tokens (CSS) + primitivos React.",
   "private": false,
   "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
     "./tokens.css": "./src/tokens/tokens.css"
   },
   "files": [
-    "src"
+    "dist",
+    "src/tokens"
   ],
+  "scripts": {
+    "build": "tsup",
+    "prepublishOnly": "npm run build"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Mutual-Processadora-de-Pagamentos/lib-ui.git"
@@ -20,10 +32,23 @@
   "peerDependencies": {
     "react": ">=18",
     "react-dom": ">=18",
+    "lucide-react": ">=0.4",
+    "clsx": ">=2",
+    "tailwind-merge": ">=3",
     "tailwindcss": "^4"
   },
   "peerDependenciesMeta": {
     "react": { "optional": true },
-    "react-dom": { "optional": true }
+    "react-dom": { "optional": true },
+    "tailwindcss": { "optional": true }
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.471.1",
+    "react": "^19.2.6",
+    "tailwind-merge": "^3.3.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.3"
   }
 }

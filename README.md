@@ -45,9 +45,23 @@ Não inclui `@import` de fontes/tailwind — esses são shell do app.
 `npm version patch|minor` → `git push --tags`. O workflow `publish.yml` publica no
 GitHub Packages automaticamente (usa `GITHUB_TOKEN`, sem PAT).
 
+### Primitivos React (a partir de v0.2.0)
+
+```ts
+import { Button, IconButton, cn } from '@mutual-processadora-de-pagamentos/lib-ui'
+```
+
+Pacote ESM + tipos, buildado com tsup (`dist/`). Peer deps fornecidas pelo app:
+`react`, `react-dom`, `lucide-react`, `clsx`, `tailwind-merge`. Os primitivos usam
+classes de token (`var(--*)`), então o app precisa importar `./tokens.css` também.
+
+> Consumo nos apps depende do grant de leitura do pacote (Manage Actions access) —
+> ver "Fase 0.1" no ADR 0001. Build + publish do pacote já funcionam (Actions, sem PAT).
+
 ## Roadmap
 
-- **Fase 1** — primitivos atômicos (`ui/`: Button, IconButton, Input, Dialog…).
+- **Fase 1 (em curso)** — primitivos atômicos (`ui/`). v0.2.0: `cn`, `Button`, `IconButton`.
+  Próximos: Input, Label, Dialog, Popover, DropdownMenu, PillTabs, etc.
 - **Fase 2** — compostos (`data-display/`: SectionCard, DataTable, StatusBadge, estados).
 - **Fase 3** — a doc viva (`/design-system`) lê deste pacote (mata o `tokens.ts` paralelo).
 
