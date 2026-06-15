@@ -76,6 +76,21 @@ export {
   type PillTabItemControlled,
 } from './ui/PillTabs'
 
+// ── Controles de navbar compartilhados (idioma / fonte / atualização) ─────────
+
+export {
+  LanguageMenu,
+  FlagIcon,
+  LANGUAGE_OPTIONS,
+  type LanguageMenuProps,
+  type LanguageOption,
+  type SupportedLanguage,
+} from './ui/LanguageMenu'
+
+export { FontSizeMenu, type FontSizeMenuProps, type FontSize } from './ui/FontSizeMenu'
+
+export { RefreshMenu, type RefreshMenuProps } from './ui/RefreshMenu'
+
 // data-display (Fase 2)
 
 export { SectionCard, type SectionCardProps } from './data-display/SectionCard'

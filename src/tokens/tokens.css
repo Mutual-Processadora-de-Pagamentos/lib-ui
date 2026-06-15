@@ -101,6 +101,10 @@
   --sidebar-accent: rgba(255, 255, 255, 0.06);
   --sidebar-accent-foreground: #ffffff;
   --sidebar-border: rgba(255, 255, 255, 0.08);
+  /* Gradiente navy de marca da sidebar (exceção legítima ao DS — brand navy).
+     Fonte única: usado no fundo da sidebar e no container do shell, garantindo
+     que a quina sidebar↔navbar não revele cor divergente. */
+  --sidebar-gradient: linear-gradient(180deg, #1e2849 0%, #161d33 100%);
 
   /* Status — ícone+texto, NUNCA fundo. Backgrounds permanecem transparentes por regra. */
   --status-success: #1fb155;
@@ -233,6 +237,8 @@
   --sidebar-accent: rgba(255, 255, 255, 0.05);
   --sidebar-accent-foreground: #ffffff;
   --sidebar-border: rgba(255, 255, 255, 0.08);
+  /* Gradiente navy de marca — sidebar navy fixa também no dark (mesmo valor). */
+  --sidebar-gradient: linear-gradient(180deg, #1e2849 0%, #161d33 100%);
 
   --status-success: #43c873;
   --status-error: #f87171;
