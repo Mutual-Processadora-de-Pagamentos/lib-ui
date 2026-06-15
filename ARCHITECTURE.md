@@ -81,14 +81,14 @@ Sem isso, os primitivos renderizam sem estilo. Obrigatório ao flipar o consumo 
   DropdownMenu, Tooltip, ScrollArea, Switch, Select, PillTabs. peerDeps: +7 `@radix-ui/*` +
   `react-router-dom`.
 - **v0.4.0** — +11 compostos `data-display`: SectionCard, StatusBadge, PageHeader, Skeleton,
-  EmptyState, ErrorState, KpiCard, MiniKpiCard, SummaryCard, DetailField, StatusPill. Sem peerDeps
-  novas. `src/data-display/`.
-- **Fase 0.1 + 1 + 2 CONCLUÍDAS (2026-06-15):** tokens + 15 primitivos + 11 compostos via **npm
+  EmptyState, ErrorState, KpiCard, MiniKpiCard, SummaryCard, DetailField, StatusPill. `src/data-display/`.
+- **v0.5.0** — +`FeeIcon` (ui/, ícone DS currentColor) + `DataTable` (data-display/). Sem peerDeps novas.
+- **Fase 0.1 → 2.1 CONCLUÍDAS (2026-06-15):** tokens + 15 primitivos + 12 compostos via **npm
   real** pelos 2 apps em produção (deploys verdes + QA visual). Consumo via SHIM de re-export
   (`components/{ui,data-display}/<X>.tsx` → `export { ... } from '@mutual.../lib-ui'`) + `@source`.
   Desbloqueio: package público + **grant de Manage Actions access** (público sozinho não basta —
   `GITHUB_TOKEN` é escopado ao próprio repo).
-- **Fora de escopo (app-local):** `DataTable` (acopla `FeeIcon`), modais de domínio, ícones de marca.
+- **Fora de escopo (app-local):** modais de domínio + ícones de MARCA (CryptoIcon/BitcoinIcon/PixIcon).
 
 ## Regras do DS (todos os primitivos)
 
