@@ -75,11 +75,13 @@ Sem isso, os primitivos renderizam sem estilo. Obrigatório ao flipar o consumo 
 
 ## Estado (2026-06-15)
 
-- **v0.1.0** — tokens (Fase 0). Consumido pelos 2 apps por vendor+sync (bridge enquanto o
-  consumo npm está gated).
+- **v0.1.0** — tokens (Fase 0).
 - **v0.2.0** — pacote React: `cn`, `Button`, `IconButton` (Fase 1, fundacional).
-- **Gate de consumo npm:** `read_package` (Manage Actions access) dos 2 repos ao pacote, ou
-  PAT `read:packages`. Até lá, vendor+sync para tokens; primitivos publicados aguardam o flip.
+- **Fase 0.1 CONCLUÍDA (2026-06-15):** tokens consumidos via **dependência npm real** pelos 2
+  apps em produção (vendor+sync removido). Desbloqueio: package público + **grant de Manage
+  Actions access** aos repos consumidores (público sozinho não basta — `GITHUB_TOKEN` é
+  escopado ao próprio repo).
+- **Pendente Fase 1:** migração em massa dos primitivos (consumo ainda local nos apps).
 
 ## Regras do DS (todos os primitivos)
 
