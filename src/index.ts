@@ -124,3 +124,7 @@ export {
   type StatusPillProps,
   type StatusPillVariant,
 } from './data-display/StatusPill'
+
+// FeeIcon (ícone DS, currentColor) + DataTable (Fase 2.1)
+export { FeeIcon, type FeeIconProps } from './ui/FeeIcon'
+export { DataTable, type Column, type DataTableProps } from './data-display/DataTable'
