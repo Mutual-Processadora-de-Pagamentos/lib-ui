@@ -1,6 +1,6 @@
 {
   "name": "@mutual-processadora-de-pagamentos/lib-ui",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Design System compartilhado da Mutual Pay — tokens (CSS) + primitivos React.",
   "private": false,
   "type": "module",
@@ -35,18 +35,64 @@
     "lucide-react": ">=0.4",
     "clsx": ">=2",
     "tailwind-merge": ">=3",
-    "tailwindcss": "^4"
+    "tailwindcss": "^4",
+    "@radix-ui/react-dialog": ">=1",
+    "@radix-ui/react-popover": ">=1",
+    "@radix-ui/react-dropdown-menu": ">=1",
+    "@radix-ui/react-tooltip": ">=1",
+    "@radix-ui/react-scroll-area": ">=1",
+    "@radix-ui/react-switch": ">=1",
+    "@radix-ui/react-select": ">=1",
+    "react-router-dom": ">=6"
   },
   "peerDependenciesMeta": {
-    "react": { "optional": true },
-    "react-dom": { "optional": true },
-    "tailwindcss": { "optional": true }
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    },
+    "tailwindcss": {
+      "optional": true
+    },
+    "@radix-ui/react-dialog": {
+      "optional": true
+    },
+    "@radix-ui/react-popover": {
+      "optional": true
+    },
+    "@radix-ui/react-dropdown-menu": {
+      "optional": true
+    },
+    "@radix-ui/react-tooltip": {
+      "optional": true
+    },
+    "@radix-ui/react-scroll-area": {
+      "optional": true
+    },
+    "@radix-ui/react-switch": {
+      "optional": true
+    },
+    "@radix-ui/react-select": {
+      "optional": true
+    },
+    "react-router-dom": {
+      "optional": true
+    }
   },
   "devDependencies": {
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@radix-ui/react-dropdown-menu": "^2.1.16",
+    "@radix-ui/react-popover": "^1.1.15",
+    "@radix-ui/react-scroll-area": "^1.2.10",
+    "@radix-ui/react-select": "^2.2.6",
+    "@radix-ui/react-switch": "^1.2.6",
+    "@radix-ui/react-tooltip": "^1.2.8",
     "@types/react": "^19.2.14",
     "clsx": "^2.1.1",
     "lucide-react": "^0.471.1",
     "react": "^19.2.6",
+    "react-router-dom": "^7.10.0",
     "tailwind-merge": "^3.3.0",
     "tsup": "^8.3.5",
     "typescript": "^5.7.3"
