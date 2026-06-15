@@ -76,12 +76,17 @@ Sem isso, os primitivos renderizam sem estilo. Obrigatório ao flipar o consumo 
 ## Estado (2026-06-15)
 
 - **v0.1.0** — tokens (Fase 0).
-- **v0.2.0** — pacote React: `cn`, `Button`, `IconButton` (Fase 1, fundacional).
-- **Fase 0.1 CONCLUÍDA (2026-06-15):** tokens consumidos via **dependência npm real** pelos 2
-  apps em produção (vendor+sync removido). Desbloqueio: package público + **grant de Manage
-  Actions access** aos repos consumidores (público sozinho não basta — `GITHUB_TOKEN` é
-  escopado ao próprio repo).
-- **Pendente Fase 1:** migração em massa dos primitivos (consumo ainda local nos apps).
+- **v0.2.0** — `cn`, `Button`, `IconButton` (Fase 1 fundacional).
+- **v0.3.0** — +12 primitivos atômicos: Input, Label, FormMessage, Textarea, Dialog, Popover,
+  DropdownMenu, Tooltip, ScrollArea, Switch, Select, PillTabs. peerDeps: +7 `@radix-ui/*` +
+  `react-router-dom`.
+- **Fase 0.1 + 1 CONCLUÍDAS (2026-06-15):** tokens + 12 primitivos consumidos via **npm real**
+  pelos 2 apps em produção (deploys verdes + QA visual). Consumo nos apps via SHIM de re-export
+  (`components/ui/<X>.tsx` → `export { ... } from '@mutual.../lib-ui'`) + `@source` p/ Tailwind.
+  Desbloqueio: package público + **grant de Manage Actions access** (público sozinho não basta —
+  `GITHUB_TOKEN` é escopado ao próprio repo).
+- **Pendente Fase 2:** compostos `data-display` (SectionCard, DataTable, StatusBadge, Skeleton,
+  EmptyState, ErrorState).
 
 ## Regras do DS (todos os primitivos)
 
