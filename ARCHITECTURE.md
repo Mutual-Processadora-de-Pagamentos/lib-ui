@@ -80,13 +80,15 @@ Sem isso, os primitivos renderizam sem estilo. Obrigatório ao flipar o consumo 
 - **v0.3.0** — +12 primitivos atômicos: Input, Label, FormMessage, Textarea, Dialog, Popover,
   DropdownMenu, Tooltip, ScrollArea, Switch, Select, PillTabs. peerDeps: +7 `@radix-ui/*` +
   `react-router-dom`.
-- **Fase 0.1 + 1 CONCLUÍDAS (2026-06-15):** tokens + 12 primitivos consumidos via **npm real**
-  pelos 2 apps em produção (deploys verdes + QA visual). Consumo nos apps via SHIM de re-export
-  (`components/ui/<X>.tsx` → `export { ... } from '@mutual.../lib-ui'`) + `@source` p/ Tailwind.
+- **v0.4.0** — +11 compostos `data-display`: SectionCard, StatusBadge, PageHeader, Skeleton,
+  EmptyState, ErrorState, KpiCard, MiniKpiCard, SummaryCard, DetailField, StatusPill. Sem peerDeps
+  novas. `src/data-display/`.
+- **Fase 0.1 + 1 + 2 CONCLUÍDAS (2026-06-15):** tokens + 15 primitivos + 11 compostos via **npm
+  real** pelos 2 apps em produção (deploys verdes + QA visual). Consumo via SHIM de re-export
+  (`components/{ui,data-display}/<X>.tsx` → `export { ... } from '@mutual.../lib-ui'`) + `@source`.
   Desbloqueio: package público + **grant de Manage Actions access** (público sozinho não basta —
   `GITHUB_TOKEN` é escopado ao próprio repo).
-- **Pendente Fase 2:** compostos `data-display` (SectionCard, DataTable, StatusBadge, Skeleton,
-  EmptyState, ErrorState).
+- **Fora de escopo (app-local):** `DataTable` (acopla `FeeIcon`), modais de domínio, ícones de marca.
 
 ## Regras do DS (todos os primitivos)
 
