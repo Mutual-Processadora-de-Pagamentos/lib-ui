@@ -75,3 +75,52 @@ export {
   type PillTabItem,
   type PillTabItemControlled,
 } from './ui/PillTabs'
+
+// data-display (Fase 2)
+
+export { SectionCard, type SectionCardProps } from './data-display/SectionCard'
+
+export {
+  StatusBadge,
+  type StatusBadgeProps,
+  type StatusBadgeColor,
+} from './data-display/StatusBadge'
+
+export { PageHeader, type PageHeaderProps } from './data-display/PageHeader'
+
+export { Skeleton, type SkeletonProps } from './data-display/Skeleton'
+
+export { EmptyState, type EmptyStateProps } from './data-display/EmptyState'
+
+export { ErrorState, type ErrorStateProps } from './data-display/ErrorState'
+
+export {
+  KpiCard,
+  type KpiCardProps,
+  type KpiCardIconColor,
+} from './data-display/KpiCard'
+
+export {
+  MiniKpiCard,
+  type MiniKpiCardProps,
+  type MiniKpiIconColor,
+} from './data-display/MiniKpiCard'
+
+export {
+  SummaryCard,
+  type SummaryCardProps,
+  type SummaryCardIconColor,
+  type SummaryMetric,
+} from './data-display/SummaryCard'
+
+export {
+  DetailField,
+  DetailFieldNode,
+  type DetailFieldProps,
+} from './data-display/DetailField'
+
+export {
+  StatusPill,
+  type StatusPillProps,
+  type StatusPillVariant,
+} from './data-display/StatusPill'
