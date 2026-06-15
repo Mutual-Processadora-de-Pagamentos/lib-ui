@@ -536,7 +536,10 @@ export function DataTable<T>({
         className="dt-scroll"
         style={{ backgroundColor: 'var(--card)' }}
       >
-        <table className="w-full border-collapse">
+        {/* table-fixed: respeita os width das colunas e nunca estoura o container
+            (conteúdo longo trunca via `truncate` nas células) — padroniza todas as
+            tabelas sem scroll horizontal. Colunas sem width dividem o resto igual. */}
+        <table className="w-full table-fixed border-collapse">
           {/* ── Cabeçalho ── */}
           <thead>
             <tr style={{ backgroundColor: 'var(--table-header)' }}>
@@ -548,7 +551,7 @@ export function DataTable<T>({
                       ? 'text-right w-full block'
                       : ''
                 // G2: header também respeita allowWrap (raro — header padrão é nowrap).
-                const wrapClass = col.allowWrap ? 'whitespace-normal break-words' : 'whitespace-nowrap'
+                const wrapClass = col.allowWrap ? 'whitespace-normal break-words' : 'truncate'
                 return (
                   <th
                     key={col.key}
@@ -622,7 +625,7 @@ export function DataTable<T>({
                       onMouseLeave={onMouseLeaveRow}
                     >
                       {effectiveColumns.map((col) => {
-                        const wrapClass = col.allowWrap ? 'whitespace-normal break-words' : 'whitespace-nowrap'
+                        const wrapClass = col.allowWrap ? 'whitespace-normal break-words' : 'truncate'
                         return (
                           <td
                             key={col.key}
@@ -656,7 +659,7 @@ export function DataTable<T>({
                         data-fee-row="true"
                       >
                         {effectiveColumns.map((col) => {
-                          const wrapClass = col.allowWrap ? 'whitespace-normal break-words' : 'whitespace-nowrap'
+                          const wrapClass = col.allowWrap ? 'whitespace-normal break-words' : 'truncate'
                           return (
                             <td
                               key={col.key}
