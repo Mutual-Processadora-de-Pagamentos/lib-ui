@@ -89,6 +89,15 @@ export interface DataTableProps<T> {
   columns: Column<T>[]
   data: T[]
   onRowClick?: (row: T) => void
+  /**
+   * Quando definido, clicar numa linha EXPANDE um painel inline (full-width,
+   * abaixo da linha) com o conteúdo retornado — em vez de disparar `onRowClick`.
+   * Apenas uma linha fica expandida por vez (toggle). Requer `getRowId` para
+   * rastrear a linha aberta de forma estável.
+   */
+  renderRowDetail?: (row: T) => ReactNode
+  /** Identificador estável da linha (necessário com `renderRowDetail`). */
+  getRowId?: (row: T) => string
   emptyMessage?: string
   pageSize?: number
   /** Quando definido, renderiza o header integrado acima da tabela. */
@@ -153,6 +162,8 @@ export function DataTable<T>({
   columns,
   data,
   onRowClick,
+  renderRowDetail,
+  getRowId,
   emptyMessage = 'Nenhum registro encontrado.',
   pageSize: initialPageSize = 20,
   title,
@@ -170,6 +181,8 @@ export function DataTable<T>({
   void _feeAlignToColumn
   const [page, setPage] = useState(0)
   const [pageSize, setPageSize] = useState(initialPageSize)
+  // Linha atualmente expandida (modo `renderRowDetail`). Só uma por vez.
+  const [expandedRowId, setExpandedRowId] = useState<string | null>(null)
 
   // ── Header state ─────────────────────────────────────────────────────────
   // Visibilidade de colunas — Set com as keys VISÍVEIS (todas no início).
@@ -572,6 +585,21 @@ export function DataTable<T>({
                 const rowBg = isEven ? 'var(--table-row)' : 'var(--table-row-alt)'
                 const feeAmount = getFeeAmount ? getFeeAmount(row) : 0
                 const hasFeeBelow = Boolean(getFeeAmount) && feeAmount > 0 && showFees
+                // Expand inline: clicar na linha abre o painel `renderRowDetail`
+                // (toggle) em vez de `onRowClick`.
+                const rowId = getRowId ? getRowId(row) : String(start + idx)
+                const isExpanded = Boolean(renderRowDetail) && expandedRowId === rowId
+                const isClickable = Boolean(renderRowDetail) || Boolean(onRowClick)
+                const handleRowClick = isClickable
+                  ? (e: ReactMouseEvent<HTMLElement>) => {
+                      if (!(e.currentTarget as HTMLElement).contains(e.target as Node)) return
+                      if (renderRowDetail) {
+                        setExpandedRowId((prev) => (prev === rowId ? null : rowId))
+                        return
+                      }
+                      onRowClick?.(row)
+                    }
+                  : undefined
                 // Hover em todas as linhas (não só clicáveis): destaca a linha em
                 // leitura. O cursor-pointer continua exclusivo das clicáveis.
                 const onMouseEnterRow = (e: ReactMouseEvent<HTMLTableRowElement>) => {
@@ -586,14 +614,9 @@ export function DataTable<T>({
                   <Fragment key={idx}>
                     {/* ── Linha PRINCIPAL ── */}
                     <tr
-                      onClick={onRowClick ? (e) => {
-                        // Ignora clicks que vieram de fora da tabela (ex.: portal
-                        // de um Dialog/Modal aberto sobre ela — o evento borbulha
-                        // pelo React mesmo estando num portal do DOM).
-                        if (!(e.currentTarget as HTMLElement).contains(e.target as Node)) return
-                        onRowClick(row)
-                      } : undefined}
-                      className={`h-12 ${onRowClick ? 'cursor-pointer transition-colors' : ''}`}
+                      onClick={handleRowClick}
+                      aria-expanded={renderRowDetail ? isExpanded : undefined}
+                      className={`h-12 ${isClickable ? 'cursor-pointer transition-colors' : ''}`}
                       style={{ backgroundColor: rowBg }}
                       onMouseEnter={onMouseEnterRow}
                       onMouseLeave={onMouseLeaveRow}
@@ -649,6 +672,18 @@ export function DataTable<T>({
                             </td>
                           )
                         })}
+                      </tr>
+                    )}
+
+                    {/* ── Painel EXPANDIDO inline (full-width) ── */}
+                    {isExpanded && renderRowDetail && (
+                      <tr data-expanded-row="true" style={{ backgroundColor: rowBg }}>
+                        <td
+                          colSpan={effectiveColumns.length}
+                          style={{ borderBottom: '1px solid var(--table-border)', padding: 0 }}
+                        >
+                          {renderRowDetail(row)}
+                        </td>
                       </tr>
                     )}
                   </Fragment>
