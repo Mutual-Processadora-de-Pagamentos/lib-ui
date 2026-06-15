@@ -10,6 +10,20 @@ Ver decisão e plano de migração: `prototipo-vite-backoffice/docs/adr/0001-lib
 `src/tokens/tokens.css` é a camada compartilhada do `global.css`: `@theme inline`, `:root`/`.dark`
 (tokens) e `@layer utilities` (escala tipográfica, `.section-card`, `.kpi-card`, etc).
 
+### Instalação (GitHub Packages)
+
+O pacote é publicado no **GitHub Packages** da org. No app, crie um `.npmrc`:
+
+```
+@mutual-processadora-de-pagamentos:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+```
+
+E adicione a dependência:
+`"@mutual-processadora-de-pagamentos/lib-ui": "^0.1.0"`.
+
+Na CI: `permissions: packages: read` + `env: NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}`.
+
 ### Consumo (Tailwind 4)
 
 No `global.css` do app, importe **depois** do Tailwind:
@@ -21,10 +35,15 @@ No `global.css` do app, importe **depois** do Tailwind:
 @import "@fontsource/montserrat/600.css";
 
 @import "tailwindcss";
-@import "@mutual/lib-ui/tokens.css";
+@import "@mutual-processadora-de-pagamentos/lib-ui/tokens.css";
 ```
 
 Não inclui `@import` de fontes/tailwind — esses são shell do app.
+
+### Publicação
+
+`npm version patch|minor` → `git push --tags`. O workflow `publish.yml` publica no
+GitHub Packages automaticamente (usa `GITHUB_TOKEN`, sem PAT).
 
 ## Roadmap
 
