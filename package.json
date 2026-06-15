@@ -1,7 +1,7 @@
 {
   "name": "@mutual-processadora-de-pagamentos/lib-ui",
-  "version": "0.7.0",
-  "description": "Design System compartilhado da Mutual Pay — tokens (CSS) + primitivos React.",
+  "version": "0.8.0",
+  "description": "Camada compartilhada de frontend da Mutual Pay — Design System (tokens CSS + primitivos React) e contratos de domínio (TS puro, ex.: cripto/OTC).",
   "private": false,
   "type": "module",
   "main": "./dist/index.js",
@@ -11,6 +11,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./contracts/crypto": {
+      "types": "./dist/contracts/crypto.d.ts",
+      "import": "./dist/contracts/crypto.js"
     },
     "./tokens.css": "./src/tokens/tokens.css"
   },

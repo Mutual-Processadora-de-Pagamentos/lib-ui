@@ -27,11 +27,38 @@ src/
 ├── lib/
 │   └── cn.ts           # util de classes (clsx + tailwind-merge)
 ├── ui/                 # primitivos atômicos (Button, IconButton, ...)
+├── contracts/          # contratos de DOMÍNIO (TS puro, zero React) — ver abaixo
+│   └── crypto.ts       # CryptoCatalog: ativos, redes/fees, spread por tier
 └── index.ts            # barrel — API pública dos primitivos (vira dist/index.js)
 ```
 
 Regra de ouro: o que é usado pelos dois apps mora aqui (fonte única); o que é específico
 de um app fica no app (ex.: `paas/src/styles/tokens-overrides.css`).
+
+## Contratos de domínio (`contracts/`)
+
+Além do Design System (presentation), o pacote carrega **contratos de domínio** — tipos +
+seed de mock que admin (backoffice) e cliente (PaaS) precisam compartilhar para "conversar"
+(ex.: o spread por tier que o admin configura é o mesmo que o cliente vê na cotação).
+
+Regras dessa camada (mantêm o smell sob controle):
+
+- **TS puro, zero React/UI** — não importa nada de `ui/`, não depende de peer deps de UI.
+- **Export subpath isolado** — `exports["./contracts/crypto"]`, fora do barrel `index.ts`.
+  Um consumidor que só usa `Button` NÃO puxa o contrato (tree-shaking + entry separada no tsup).
+- **Multi-entry no tsup** — `entry: ['src/index.ts', 'src/contracts/crypto.ts']`.
+
+### ⚠️ Por que mora aqui (e quando sair)
+
+`lib-ui` é, por definição, Design System. Hospedar domínio aqui é um **trade-off consciente**:
+é o único pacote de frontend que os dois protótipos já consomem (`lib-core`/`lib-utils` são
+domínio **backend**, Node, não consumidos pelo front). Criar pacote novo para UM contrato em
+fase de protótipo seria over-engineering.
+
+**Gatilho de migração para `lib-shared-contracts` (extrair quando QUALQUER um ocorrer):**
+1. Entrar um 2º contrato de domínio não relacionado (não-cripto); ou
+2. Um produto que NÃO usa cripto passar a consumir `lib-ui` (arrastaria o contrato à toa); ou
+3. O contrato precisar de deps próprias (validação Zod, etc.) que não cabem num DS.
 
 ## O que é buildado vs cru
 
@@ -83,6 +110,10 @@ Sem isso, os primitivos renderizam sem estilo. Obrigatório ao flipar o consumo 
 - **v0.4.0** — +11 compostos `data-display`: SectionCard, StatusBadge, PageHeader, Skeleton,
   EmptyState, ErrorState, KpiCard, MiniKpiCard, SummaryCard, DetailField, StatusPill. `src/data-display/`.
 - **v0.5.0** — +`FeeIcon` (ui/, ícone DS currentColor) + `DataTable` (data-display/). Sem peerDeps novas.
+- **v0.8.0 (2026-06-15)** — 1ª camada de **contratos de domínio**: `contracts/crypto.ts` (`CryptoCatalog`
+  = ativos + redes/fees + spread por tier + helpers). Subpath `./contracts/crypto`, multi-entry tsup,
+  TS puro. Alinha cripto/OTC entre backoffice (admin configura) e PaaS (cliente consome) — mata o
+  spread hardcoded (`0.0005`) e os mocks paralelos de ativos/redes. Ver seção "Contratos de domínio".
 - **Fase 0.1 → 2.1 CONCLUÍDAS (2026-06-15):** tokens + 15 primitivos + 12 compostos via **npm
   real** pelos 2 apps em produção (deploys verdes + QA visual). Consumo via SHIM de re-export
   (`components/{ui,data-display}/<X>.tsx` → `export { ... } from '@mutual.../lib-ui'`) + `@source`.
