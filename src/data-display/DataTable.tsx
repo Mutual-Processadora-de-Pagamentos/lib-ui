@@ -639,8 +639,11 @@ export function DataTable<T>({
                       })}
                     </tr>
 
-                    {/* ── Linha de TAXA (independente, intercalada) ── */}
-                    {hasFeeBelow && (
+                    {/* ── Linha de TAXA (independente, intercalada) ──
+                        Oculta enquanto a linha está expandida: o painel de
+                        detalhe já exibe Taxa + Total, e a taxa entre a linha
+                        principal e o painel quebrava a associação visual. */}
+                    {hasFeeBelow && !isExpanded && (
                       <tr
                         onClick={onRowClick ? (e) => {
                           if (!(e.currentTarget as HTMLElement).contains(e.target as Node)) return
