@@ -91,6 +91,10 @@ export { FontSizeMenu, type FontSizeMenuProps, type FontSize } from './ui/FontSi
 
 export { RefreshMenu, type RefreshMenuProps } from './ui/RefreshMenu'
 
+// ── Shell / layout (ADR 0002 — slice A) ───────────────────────────────────────
+
+export { AppShell, type AppShellProps } from './shell/AppShell'
+
 // data-display (Fase 2)
 
 export { SectionCard, type SectionCardProps } from './data-display/SectionCard'
