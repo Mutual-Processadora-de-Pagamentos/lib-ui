@@ -19,8 +19,11 @@ import {
   ChevronsLeft,
   ChevronsRight,
   Columns3,
+  Inbox,
   Timer,
+  type LucideIcon,
 } from 'lucide-react'
+import { EmptyState } from './EmptyState'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -99,6 +102,10 @@ export interface DataTableProps<T> {
   /** Identificador estável da linha (necessário com `renderRowDetail`). */
   getRowId?: (row: T) => string
   emptyMessage?: string
+  /** Ícone do estado vazio (default: Inbox). */
+  emptyIcon?: LucideIcon
+  /** Descrição secundária opcional do estado vazio. */
+  emptyDescription?: string
   pageSize?: number
   /** Quando definido, renderiza o header integrado acima da tabela. */
   title?: string
@@ -165,6 +172,8 @@ export function DataTable<T>({
   renderRowDetail,
   getRowId,
   emptyMessage = 'Nenhum registro encontrado.',
+  emptyIcon,
+  emptyDescription,
   pageSize: initialPageSize = 20,
   title,
   count,
@@ -574,12 +583,12 @@ export function DataTable<T>({
           <tbody>
             {pageData.length === 0 ? (
               <tr>
-                <td
-                  colSpan={effectiveColumns.length}
-                  className="px-3 py-10 text-center text-[13px]"
-                  style={{ color: 'var(--muted-foreground)' }}
-                >
-                  {emptyMessage}
+                <td colSpan={effectiveColumns.length} className="px-3 py-10">
+                  <EmptyState
+                    icon={emptyIcon ?? Inbox}
+                    title={emptyMessage}
+                    description={emptyDescription}
+                  />
                 </td>
               </tr>
             ) : (
