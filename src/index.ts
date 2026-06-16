@@ -94,6 +94,7 @@ export { RefreshMenu, type RefreshMenuProps } from './ui/RefreshMenu'
 // ── Shell / layout (ADR 0002 — slice A) ───────────────────────────────────────
 
 export { AppShell, type AppShellProps } from './shell/AppShell'
+export { SidebarFrame, type SidebarFrameProps } from './shell/SidebarFrame'
 
 // data-display (Fase 2)
 
