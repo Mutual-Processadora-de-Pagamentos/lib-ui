@@ -141,7 +141,9 @@ export function DialogFooter({ className, ...props }: React.HTMLAttributes<HTMLD
     <div
       className={cn(
         'flex items-center justify-end gap-3 px-6 py-4 shrink-0',
-        'border-t border-[color:var(--border)]',
+        // Barra inferior em cinza destacado (--canvas off-white) p/ separar do corpo
+        // branco do modal — padrão de modal do DS (evita o look "tudo branco").
+        'border-t border-[color:var(--border)] bg-[color:var(--canvas)]',
         className,
       )}
       {...props}
