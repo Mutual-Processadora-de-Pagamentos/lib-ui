@@ -839,7 +839,7 @@
   margin-top: 1.25rem;   /* respiro entre o conteúdo e o rodapé */
   padding: 0.75rem 1.5rem; /* py-3 px-6 */
   border-top: 1px solid var(--border);
-  background-color: var(--card);
+  background-color: var(--canvas);
   flex-shrink: 0;
 }
 
@@ -849,7 +849,7 @@
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
   border-top: 1px solid var(--border);
-  background-color: var(--card);
+  background-color: var(--canvas);
   flex-shrink: 0;
 }
 
