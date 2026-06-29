@@ -88,6 +88,10 @@
   --input: #ffffff;
   --ring: #1e293b;
 
+  /* Scrim/backdrop de modais e drawers (cor base sólida; a opacidade é aplicada
+   * por quem consome, ex.: color-mix(in srgb, var(--scrim) 50%, transparent)). */
+  --scrim: #000000;
+
   --chart-1: #fcb71b;
   --chart-2: #232f63;
   --chart-3: #64748b;
@@ -223,6 +227,9 @@
   --border: rgba(148, 163, 184, 0.12);
   --input: #1e2535;
   --ring: #334155;
+
+  /* Scrim/backdrop — preto nos dois temas (backdrop de modal é escuro em ambos). */
+  --scrim: #000000;
 
   --chart-1: #fcb71b;
   --chart-2: #5b78f5;

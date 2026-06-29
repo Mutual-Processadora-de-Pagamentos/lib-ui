@@ -24,7 +24,7 @@ export const DialogOverlay = forwardRef<
     <DialogPrimitive.Overlay
       ref={ref}
       className={cn(
-        'fixed inset-0 z-50 bg-black/50 backdrop-blur-sm',
+        'fixed inset-0 z-50 bg-[color-mix(in_srgb,var(--scrim)_50%,transparent)] backdrop-blur-sm',
         'data-[state=open]:animate-fadeIn',
         className,
       )}
