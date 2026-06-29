@@ -193,6 +193,50 @@
   /* WhatsApp bubble — balão de pré-visualização da mensagem. */
   --whatsapp-bubble: #25D366;
   --whatsapp-bubble-text: #ffffff;
+
+  /* Marcas de criptomoeda/rede — cores oficiais dos ativos (iconografia).
+     Fixas nos dois temas (são marca, não superfície de UI). */
+  --coin-btc: #f7931a;
+  --coin-eth: #627eea;
+  --coin-usdt: #26a17b;
+  --coin-usdc: #2775ca;
+  --coin-bnb: #f3ba2f;
+  --coin-brl: #21a366;
+  --coin-polygon: #8247e5;
+  --coin-arbitrum: #28a0f0;
+  --coin-tron: #ff0013;
+  --coin-solana: #14f195;
+
+  /* Bandeiras nacionais (seletor de idioma) — cores factuais. */
+  --flag-br-green: #009c3b;
+  --flag-br-yellow: #ffdf00;
+  --flag-br-blue: #002776;
+  --flag-us-red: #b22234;
+  --flag-us-blue: #3c3b6e;
+  --flag-es-red: #aa151b;
+  --flag-es-yellow: #f1bf00;
+  --flag-cn-red: #de2910;
+  --flag-cn-yellow: #ffde00;
+
+  /* Temas categóricos por perfil de acesso (A–G) — distinção visual, não status.
+     border / bg / ring / badge-bg / badge-fg por perfil. */
+  --profile-a-border: #e9d5ff; --profile-a-bg: #faf5ff; --profile-a-ring: #c084fc; --profile-a-badge-bg: #f3e8ff; --profile-a-badge-fg: #7e22ce;
+  --profile-b-border: #bfdbfe; --profile-b-bg: #eff6ff; --profile-b-ring: #60a5fa; --profile-b-badge-bg: #dbeafe; --profile-b-badge-fg: #1d4ed8;
+  --profile-c-border: #a7f3d0; --profile-c-bg: #ecfdf5; --profile-c-ring: #34d399; --profile-c-badge-bg: #d1fae5; --profile-c-badge-fg: #047857;
+  --profile-d-border: #fde68a; --profile-d-bg: #fffbeb; --profile-d-ring: #fbbf24; --profile-d-badge-bg: #fef3c7; --profile-d-badge-fg: #b45309;
+  --profile-e-border: color-mix(in srgb, #232f63 30%, transparent); --profile-e-bg: color-mix(in srgb, #232f63 5%, transparent); --profile-e-ring: #232f63; --profile-e-badge-bg: color-mix(in srgb, #232f63 10%, transparent); --profile-e-badge-fg: #232f63;
+  --profile-f-border: #fecaca; --profile-f-bg: #fef2f2; --profile-f-ring: #f87171; --profile-f-badge-bg: #fee2e2; --profile-f-badge-fg: #b91c1c;
+  --profile-g-border: #e5e7eb; --profile-g-bg: #f9fafb; --profile-g-ring: #9ca3af; --profile-g-badge-bg: #f3f4f6; --profile-g-badge-fg: #4b5563;
+
+  /* Paleta categórica de gráfico estendida (donuts/pizzas multi-fatia).
+     Complementa --chart-1..5 quando há mais de 5 séries. */
+  --chart-6: #8b5cf6;
+  --chart-7: #06b6d4;
+  --chart-8: #ec4899;
+  --chart-9: #fb923c;
+  --chart-10: #a78bfa;
+  --chart-11: #10b981;
+  --chart-12: #ef4444;
 }
 
 .dark {
