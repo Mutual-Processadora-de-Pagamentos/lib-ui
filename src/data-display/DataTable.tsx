@@ -628,7 +628,7 @@ export function DataTable<T>({
                     <tr
                       onClick={handleRowClick}
                       aria-expanded={renderRowDetail ? isExpanded : undefined}
-                      className={`h-12 ${isClickable ? 'cursor-pointer transition-colors' : ''}`}
+                      className={`h-14 ${isClickable ? 'cursor-pointer transition-colors' : ''}`}
                       style={{ backgroundColor: rowBg }}
                       onMouseEnter={onMouseEnterRow}
                       onMouseLeave={onMouseLeaveRow}
@@ -638,7 +638,7 @@ export function DataTable<T>({
                         return (
                           <td
                             key={col.key}
-                            className={`px-3 py-2 text-[13px] ${wrapClass} ${alignClass(col.align)}`}
+                            className={`px-3 py-3 text-[13px] ${wrapClass} ${alignClass(col.align)}`}
                             style={{
                               color: 'var(--foreground)',
                               borderBottom: '1px solid var(--table-border)',
@@ -672,7 +672,7 @@ export function DataTable<T>({
                           return (
                             <td
                               key={col.key}
-                              className={`px-3 py-2 text-[13px] ${wrapClass} ${alignClass(col.align)}`}
+                              className={`px-3 py-3 text-[13px] ${wrapClass} ${alignClass(col.align)}`}
                               style={{
                                 color: 'var(--foreground)',
                                 borderBottom: '1px solid var(--table-border)',
