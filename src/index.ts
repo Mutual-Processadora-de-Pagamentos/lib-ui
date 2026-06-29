@@ -152,3 +152,8 @@ export { DataTable, type Column, type DataTableProps } from './data-display/Data
 // Ícones de domínio Mutual (símbolo Pix oficial; marcas de cripto via tokens --coin-*)
 export { PixIcon, type PixIconProps } from './ui/PixIcon'
 export { CryptoIcon, type CryptoIconProps, type CryptoNetwork } from './ui/CryptoIcon'
+export { ActionIcon, type ActionType } from './ui/ActionIcon'
+export { TransactionIcon, type TransactionType } from './ui/TransactionIcon'
+export { PaymentMethodIcon, type PaymentMethod } from './ui/PaymentMethodIcon'
+export { InfractionIcon, type InfractionType } from './ui/InfractionIcon'
+export { NotificationIcon, type NotificationType } from './ui/NotificationIcon'
