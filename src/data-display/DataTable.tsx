@@ -545,10 +545,11 @@ export function DataTable<T>({
         className="dt-scroll"
         style={{ backgroundColor: 'var(--card)' }}
       >
-        {/* table-fixed: respeita os width das colunas e nunca estoura o container
-            (conteúdo longo trunca via `truncate` nas células) — padroniza todas as
-            tabelas sem scroll horizontal. Colunas sem width dividem o resto igual. */}
-        <table className="w-full table-fixed border-collapse">
+        {/* table-auto: cada coluna se dimensiona pelo seu conteúdo. Colunas que não
+            devem crescer (ex.: IDs longos) devem limitar a largura na própria célula
+            (`max-w-[Npx] truncate`). Quando a soma excede o container, o wrapper
+            `overflow-x-auto` gera scroll horizontal. `width` na coluna vira sugestão. */}
+        <table className="w-full table-auto border-collapse">
           {/* ── Cabeçalho ── */}
           <thead>
             <tr style={{ backgroundColor: 'var(--table-header)' }}>
