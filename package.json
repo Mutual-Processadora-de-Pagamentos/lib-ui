@@ -1,6 +1,6 @@
 {
   "name": "@mutual-processadora-de-pagamentos/lib-ui",
-  "version": "0.12.3",
+  "version": "0.12.4",
   "description": "Camada compartilhada de frontend da Mutual Pay — Design System (tokens CSS + primitivos React) e contratos de domínio (TS puro, ex.: cripto/OTC).",
   "private": false,
   "type": "module",
