@@ -148,3 +148,7 @@ export {
 // FeeIcon (ícone DS, currentColor) + DataTable (Fase 2.1)
 export { FeeIcon, type FeeIconProps } from './ui/FeeIcon'
 export { DataTable, type Column, type DataTableProps } from './data-display/DataTable'
+
+// Ícones de domínio Mutual (símbolo Pix oficial; marcas de cripto via tokens --coin-*)
+export { PixIcon, type PixIconProps } from './ui/PixIcon'
+export { CryptoIcon, type CryptoIconProps, type CryptoNetwork } from './ui/CryptoIcon'
