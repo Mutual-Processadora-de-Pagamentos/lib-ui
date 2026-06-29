@@ -163,3 +163,24 @@ export { HelpIcon } from './ui/HelpIcon'
 export { DevolverPixIcon } from './ui/DevolverPixIcon'
 export { PixIconWithBackground, type PixDirection } from './ui/PixIconWithBackground'
 export { PixTypeIcon, type PixType } from './ui/PixTypeIcon'
+
+// Ícones SVG genéricos (stroke currentColor) — cards de ação rápida e seções
+export {
+  CryptoGenericIcon,
+  BarcodeIcon,
+  FavoriteIcon,
+  TransactionsIcon,
+  FeesIcon,
+  QrCodeIcon,
+  ConversionIcon,
+  TicketIcon,
+  ValuesIcon,
+  InfoIcon,
+  WalletIcon,
+  ShieldIcon,
+  ProcessIcon,
+  CheckValidatedIcon,
+} from './ui/CustomIcons'
+
+// Disco da criptomoeda por sigla (inline, tokens --coin-*)
+export { default as CriptoMoedaIcon } from './ui/CriptoMoedaIcon'
