@@ -136,14 +136,27 @@ export function DialogHeaderRich({
   )
 }
 
-export function DialogFooter({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+/**
+ * DialogFooter — barra inferior do modal em cinza (--canvas) com border-t.
+ *
+ * `align="end"` (default): botões à direita, largura natural, gap-3 — padrão de
+ * formulário/confirmação.
+ * `align="split"`: botões 50/50 ocupando toda a largura (cada um `flex-1`), gap
+ * menor — replica a antiga classe global `.modal-footer` (par Cancelar/Confirmar
+ * em largura igual). Os filhos diretos viram `flex-1` automaticamente.
+ */
+export function DialogFooter({
+  className,
+  align = 'end',
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & { align?: 'end' | 'split' }) {
   return (
     <div
       className={cn(
-        'flex items-center justify-end gap-3 px-6 py-4 shrink-0',
-        // Barra inferior em cinza destacado (--canvas off-white) p/ separar do corpo
-        // branco do modal — padrão de modal do DS (evita o look "tudo branco").
-        'border-t border-[color:var(--border)] bg-[color:var(--canvas)]',
+        'flex items-center shrink-0 border-t border-[color:var(--border)] bg-[color:var(--canvas)]',
+        align === 'split'
+          ? 'gap-2 px-6 py-3 [&>*]:flex-1'
+          : 'justify-end gap-3 px-6 py-4',
         className,
       )}
       {...props}
