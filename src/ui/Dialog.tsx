@@ -36,25 +36,41 @@ export const DialogOverlay = forwardRef<
 
 // ── Content ────────────────────────────────────────────────────────────────────
 
+/** Posição do conteúdo. `center` = modal centrado (default). `right`/`left` =
+ * drawer lateral de altura cheia. `bottom` = bottom-sheet (mobile). */
+export type DialogSide = 'center' | 'right' | 'left' | 'bottom'
+
+const SIDE_CLASSES: Record<DialogSide, string> = {
+  center:
+    'left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg rounded-[14px] border data-[state=open]:animate-fadeIn',
+  right:
+    'inset-y-0 right-0 h-full w-full max-w-md rounded-l-[14px] border-l data-[state=open]:animate-slideInRight',
+  left:
+    'inset-y-0 left-0 h-full w-full max-w-md rounded-r-[14px] border-r data-[state=open]:animate-slideInLeft',
+  bottom:
+    'inset-x-0 bottom-0 w-full max-h-[90vh] rounded-t-[14px] border-t data-[state=open]:animate-slideInBottom',
+}
+
 export const DialogContent = forwardRef<
   ElementRef<typeof DialogPrimitive.Content>,
   ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
     /** Oculta o botão X automático no canto superior */
     hideClose?: boolean
+    /** Posição: `center` (modal, default), `right`/`left` (drawer lateral), `bottom` (sheet). */
+    side?: DialogSide
   }
->(function DialogContent({ className, children, hideClose = false, ...props }, ref) {
+>(function DialogContent({ className, children, hideClose = false, side = 'center', ...props }, ref) {
   return (
     <DialogPrimitive.Portal>
       <DialogOverlay />
       <DialogPrimitive.Content
         ref={ref}
         className={cn(
-          'fixed left-1/2 top-1/2 z-[200] -translate-x-1/2 -translate-y-1/2',
-          'w-full max-w-lg',
-          'rounded-[14px] shadow-xl outline-none overflow-hidden',
+          'fixed z-[200]',
+          'shadow-xl outline-none overflow-hidden',
           'bg-[color:var(--card)] text-[color:var(--card-foreground)]',
-          'border border-[color:var(--border)]',
-          'data-[state=open]:animate-fadeIn',
+          'border-[color:var(--border)]',
+          SIDE_CLASSES[side],
           className,
         )}
         {...props}

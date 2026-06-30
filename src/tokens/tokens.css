@@ -529,6 +529,44 @@
   .animate-scaleIn {
     animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
+
+  /* Drawers — slide a partir da borda (DialogContent side=right/left/bottom) */
+  .animate-slideInRight {
+    animation: slideInRight 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .animate-slideInLeft {
+    animation: slideInLeft 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .animate-slideInBottom {
+    animation: slideInBottom 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInBottom {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
 /* Scrollbar global — sutil, light/dark */

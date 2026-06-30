@@ -24,6 +24,7 @@ export {
   DialogHeaderRich,
   DialogFooter,
 } from './ui/Dialog'
+export type { DialogSide } from './ui/Dialog'
 
 export {
   Popover,
