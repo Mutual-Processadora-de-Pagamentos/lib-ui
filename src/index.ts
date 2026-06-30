@@ -26,6 +26,8 @@ export {
 } from './ui/Dialog'
 export type { DialogSide } from './ui/Dialog'
 
+export { ConfirmDialog, type ConfirmDialogProps } from './ui/ConfirmDialog'
+
 export {
   Popover,
   PopoverTrigger,
