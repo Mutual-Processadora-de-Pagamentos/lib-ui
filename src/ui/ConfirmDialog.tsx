@@ -21,14 +21,18 @@ import {
 
 /**
  * Tom semântico do diálogo — pinta o ícone do header E o botão de confirmar
- * juntos. `default` mantém o navy neutro (retrocompatível).
+ * juntos. São 4 tons:
+ * - `pacifico` (navy, neutro): confirmações tranquilas, ex. reenviar webhook. Default.
+ * - `atencao` (amarelo): ação que pede cautela, ex. sair/trocar de conta.
+ * - `confirmar` (verde): ação positiva a aprovar.
+ * - `perigo` (vermelho): ação irreversível/destrutiva, ex. excluir/estornar.
  */
-export type ConfirmDialogTone = 'default' | 'atencao' | 'confirmar' | 'perigo'
+export type ConfirmDialogTone = 'pacifico' | 'atencao' | 'confirmar' | 'perigo'
 
 type ToneStyle = { iconColor: string; icon: LucideIcon; confirmVariant: ButtonProps['variant'] }
 
 const TONE: Record<ConfirmDialogTone, ToneStyle> = {
-  default:  { iconColor: 'var(--section-icon-color)', icon: AlertCircle,   confirmVariant: 'primary' },
+  pacifico: { iconColor: 'var(--section-icon-color)', icon: AlertCircle,   confirmVariant: 'primary' },
   atencao:  { iconColor: 'var(--status-warning)',     icon: AlertTriangle, confirmVariant: 'warning' },
   confirmar:{ iconColor: 'var(--status-success)',     icon: CheckCircle2,  confirmVariant: 'success' },
   perigo:   { iconColor: 'var(--status-error)',       icon: OctagonAlert,  confirmVariant: 'destructive' },
@@ -42,10 +46,10 @@ export interface ConfirmDialogProps {
   confirmText?: string
   cancelText?: string
   /**
-   * Tom semântico: pinta ícone + botão confirmar. `atencao` (amarelo),
-   * `confirmar` (verde), `perigo` (vermelho, ação irreversível/risco).
-   * Default `default` (navy). Define o ícone e a variante do botão padrão —
-   * ambos sobrescrevíveis por `icon` e `confirmVariant`.
+   * Tom semântico: pinta ícone + botão confirmar. `pacifico` (navy, default),
+   * `atencao` (amarelo), `confirmar` (verde), `perigo` (vermelho, ação
+   * irreversível/risco). Define o ícone e a variante do botão padrão — ambos
+   * sobrescrevíveis por `icon` e `confirmVariant`.
    */
   tone?: ConfirmDialogTone
   /** Variante do botão de confirmação. Sobrescreve a derivada do `tone`. */
@@ -69,7 +73,7 @@ export function ConfirmDialog({
   message,
   confirmText = 'Confirmar',
   cancelText = 'Cancelar',
-  tone = 'default',
+  tone = 'pacifico',
   confirmVariant,
   icon,
   maxWidth = 'max-w-md',
