@@ -106,7 +106,8 @@ export {
   type StatusBadgeColor,
 } from './data-display/StatusBadge'
 
-export { PageHeader, type PageHeaderProps } from './data-display/PageHeader'
+export { PageHeader, type PageHeaderProps, type BreadcrumbItem } from './data-display/PageHeader'
+export { MoneyValue, type MoneyValueProps, type MoneySize } from './data-display/MoneyValue'
 
 export { Skeleton, type SkeletonProps } from './data-display/Skeleton'
 
