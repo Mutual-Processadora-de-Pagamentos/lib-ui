@@ -8,7 +8,7 @@
  * Quando há `children`, eles entram como body entre header e footer.
  */
 
-import { AlertCircle, type LucideIcon } from 'lucide-react'
+import { AlertCircle, AlertTriangle, CheckCircle2, OctagonAlert, type LucideIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { cn } from '../lib/cn'
 import { Button, type ButtonProps } from './Button'
@@ -19,6 +19,21 @@ import {
   DialogDescription,
 } from './Dialog'
 
+/**
+ * Tom semântico do diálogo — pinta o ícone do header E o botão de confirmar
+ * juntos. `default` mantém o navy neutro (retrocompatível).
+ */
+export type ConfirmDialogTone = 'default' | 'atencao' | 'confirmar' | 'perigo'
+
+type ToneStyle = { iconColor: string; icon: LucideIcon; confirmVariant: ButtonProps['variant'] }
+
+const TONE: Record<ConfirmDialogTone, ToneStyle> = {
+  default:  { iconColor: 'var(--section-icon-color)', icon: AlertCircle,   confirmVariant: 'primary' },
+  atencao:  { iconColor: 'var(--status-warning)',     icon: AlertTriangle, confirmVariant: 'warning' },
+  confirmar:{ iconColor: 'var(--status-success)',     icon: CheckCircle2,  confirmVariant: 'success' },
+  perigo:   { iconColor: 'var(--status-error)',       icon: OctagonAlert,  confirmVariant: 'destructive' },
+}
+
 export interface ConfirmDialogProps {
   open: boolean
   onOpenChange?: (open: boolean) => void
@@ -26,9 +41,16 @@ export interface ConfirmDialogProps {
   message?: ReactNode
   confirmText?: string
   cancelText?: string
-  /** Variante do botão de confirmação. Default `primary` (navy). */
+  /**
+   * Tom semântico: pinta ícone + botão confirmar. `atencao` (amarelo),
+   * `confirmar` (verde), `perigo` (vermelho, ação irreversível/risco).
+   * Default `default` (navy). Define o ícone e a variante do botão padrão —
+   * ambos sobrescrevíveis por `icon` e `confirmVariant`.
+   */
+  tone?: ConfirmDialogTone
+  /** Variante do botão de confirmação. Sobrescreve a derivada do `tone`. */
   confirmVariant?: ButtonProps['variant']
-  /** Ícone solto do header. Default `AlertCircle`. */
+  /** Ícone solto do header. Sobrescreve o derivado do `tone`. */
   icon?: LucideIcon
   /** Largura máxima do diálogo. Default `max-w-md`. */
   maxWidth?: string
@@ -47,8 +69,9 @@ export function ConfirmDialog({
   message,
   confirmText = 'Confirmar',
   cancelText = 'Cancelar',
-  confirmVariant = 'primary',
-  icon: Icon = AlertCircle,
+  tone = 'default',
+  confirmVariant,
+  icon,
   maxWidth = 'max-w-md',
   onConfirm,
   onCancel,
@@ -58,6 +81,9 @@ export function ConfirmDialog({
 }: ConfirmDialogProps) {
   const hasBody = Boolean(children)
   const handleCancel = onCancel ?? (() => onOpenChange?.(false))
+  const toneStyle = TONE[tone]
+  const Icon = icon ?? toneStyle.icon
+  const resolvedConfirmVariant = confirmVariant ?? toneStyle.confirmVariant
 
   return (
     <Dialog
@@ -82,7 +108,7 @@ export function ConfirmDialog({
             strokeWidth={1.75}
             aria-hidden
             className="shrink-0 mt-0.5"
-            style={{ color: 'var(--section-icon-color)' }}
+            style={{ color: toneStyle.iconColor }}
           />
           <div>
             <DialogTitle className="text-base font-normal leading-tight" style={{ color: 'var(--foreground)' }}>
@@ -107,7 +133,7 @@ export function ConfirmDialog({
           <Button type="button" variant="outline" onClick={handleCancel} disabled={loading}>
             {cancelText}
           </Button>
-          <Button type="button" variant={confirmVariant} onClick={onConfirm} loading={loading}>
+          <Button type="button" variant={resolvedConfirmVariant} onClick={onConfirm} loading={loading}>
             {confirmText}
           </Button>
         </div>
