@@ -143,6 +143,19 @@ export interface DataTableProps<T> {
    * `feeCell`. Mantido para compatibilidade — ignorado pelo componente.
    */
   feeAlignToColumn?: string
+  /**
+   * Habilita a coluna de seleção por checkbox (renderizada como PRIMEIRA
+   * coluna, fora do toggle de colunas). Requer `getRowId` — sem ele a
+   * seleção é ignorada silenciosamente. Aditivo: sem esta prop o DataTable
+   * funciona idêntico ao comportamento anterior.
+   */
+  selectable?: boolean
+  /** Ids das linhas selecionadas (controlado pelo consumidor). */
+  selectedIds?: string[]
+  /** Disparado ao clicar no checkbox de uma linha. */
+  onToggleRow?: (id: string) => void
+  /** Disparado ao clicar no checkbox "select-all" do cabeçalho. */
+  onToggleAll?: () => void
 }
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
@@ -151,6 +164,40 @@ function alignClass(align?: 'left' | 'right' | 'center'): string {
   if (align === 'right') return 'text-right'
   if (align === 'center') return 'text-center'
   return 'text-left'
+}
+
+// Largura fixa da coluna de seleção (checkbox + padding).
+const SELECT_COLUMN_WIDTH = '44px'
+
+// Checkbox de seleção estilizado por tokens. `accent-color: var(--primary)`
+// pinta o preenchimento (marcado) e o check; borda via `--border`. Native
+// input para herdar suporte a `indeterminate` e acessibilidade de teclado.
+function SelectCheckbox({
+  checked,
+  ariaLabel,
+  onToggle,
+  inputRef,
+}: {
+  checked: boolean
+  ariaLabel: string
+  onToggle: () => void
+  inputRef?: (el: HTMLInputElement | null) => void
+}) {
+  return (
+    <input
+      ref={inputRef}
+      type="checkbox"
+      checked={checked}
+      aria-label={ariaLabel}
+      onClick={(e) => e.stopPropagation()}
+      onChange={onToggle}
+      className="size-4 cursor-pointer rounded-[4px] border align-middle outline-none"
+      style={{
+        accentColor: 'var(--primary)',
+        borderColor: 'var(--border)',
+      }}
+    />
+  )
 }
 
 // ── Auto-refresh: opções de intervalo ─────────────────────────────────────────
@@ -184,6 +231,10 @@ export function DataTable<T>({
   onShowFeesChange,
   getFeeAmount,
   feeAlignToColumn: _feeAlignToColumn,
+  selectable = false,
+  selectedIds,
+  onToggleRow,
+  onToggleAll,
 }: DataTableProps<T>) {
   // `feeAlignToColumn` é mantido por compatibilidade reversa mas não é mais
   // usado — agora cada coluna define seu próprio `feeCell`.
@@ -351,6 +402,24 @@ export function DataTable<T>({
     color: 'var(--ring)',
     backgroundColor: 'color-mix(in srgb, var(--ring) 10%, transparent)',
     border: 'none',
+  }
+
+  // ── Seleção de linha (checkbox) ──────────────────────────────────────────
+  // Só ativa quando `selectable` E `getRowId` existem — sem id estável não
+  // há como rastrear a linha. Sem isso, nada de seleção renderiza.
+  const selectionEnabled = selectable && Boolean(getRowId)
+  const selectedSet = useMemo(() => new Set(selectedIds ?? []), [selectedIds])
+  // Estado do "select-all" calculado sobre TODOS os dados (seleção é
+  // cross-page em operações em massa), não apenas a página visível.
+  const allSelected = data.length > 0 && selectedSet.size >= data.length
+  const someSelected = selectedSet.size > 0 && !allSelected
+  // `indeterminate` não existe como atributo HTML — só via DOM. Aplicado por
+  // callback ref para refletir o estado "alguns selecionados".
+  const setSelectAllRef = (el: HTMLInputElement | null) => {
+    if (el) el.indeterminate = someSelected
+  }
+  const selectedRowStyle: CSSProperties = {
+    backgroundColor: 'color-mix(in srgb, var(--primary) 10%, transparent)',
   }
 
   return (
@@ -553,6 +622,22 @@ export function DataTable<T>({
           {/* ── Cabeçalho ── */}
           <thead>
             <tr style={{ backgroundColor: 'var(--table-header)' }}>
+              {selectionEnabled && (
+                <th
+                  className="h-10 px-3 py-2 text-center align-middle"
+                  style={{
+                    width: SELECT_COLUMN_WIDTH,
+                    borderBottom: '1px solid var(--table-border)',
+                  }}
+                >
+                  <SelectCheckbox
+                    inputRef={setSelectAllRef}
+                    checked={allSelected}
+                    ariaLabel="Selecionar todas as linhas"
+                    onToggle={() => onToggleAll?.()}
+                  />
+                </th>
+              )}
               {effectiveColumns.map((col) => {
                 const spanAlignClass =
                   col.align === 'center'
@@ -584,7 +669,7 @@ export function DataTable<T>({
           <tbody>
             {pageData.length === 0 ? (
               <tr>
-                <td colSpan={effectiveColumns.length} className="px-3 py-10">
+                <td colSpan={effectiveColumns.length + (selectionEnabled ? 1 : 0)} className="px-3 py-10">
                   <EmptyState
                     icon={emptyIcon ?? Inbox}
                     title={emptyMessage}
@@ -595,12 +680,19 @@ export function DataTable<T>({
             ) : (
               pageData.map((row, idx) => {
                 const isEven = idx % 2 === 0
-                const rowBg = isEven ? 'var(--table-row)' : 'var(--table-row-alt)'
+                const rowId = getRowId ? getRowId(row) : String(start + idx)
+                const isSelected = selectionEnabled && selectedSet.has(rowId)
+                // Linha selecionada usa o highlight (token) como fundo base —
+                // assim o restore do hover também volta para o destaque.
+                const rowBg = isSelected
+                  ? (selectedRowStyle.backgroundColor as string)
+                  : isEven
+                    ? 'var(--table-row)'
+                    : 'var(--table-row-alt)'
                 const feeAmount = getFeeAmount ? getFeeAmount(row) : 0
                 const hasFeeBelow = Boolean(getFeeAmount) && feeAmount > 0 && showFees
                 // Expand inline: clicar na linha abre o painel `renderRowDetail`
                 // (toggle) em vez de `onRowClick`.
-                const rowId = getRowId ? getRowId(row) : String(start + idx)
                 const isExpanded = Boolean(renderRowDetail) && expandedRowId === rowId
                 const isClickable = Boolean(renderRowDetail) || Boolean(onRowClick)
                 const handleRowClick = isClickable
@@ -634,6 +726,21 @@ export function DataTable<T>({
                       onMouseEnter={onMouseEnterRow}
                       onMouseLeave={onMouseLeaveRow}
                     >
+                      {selectionEnabled && (
+                        <td
+                          className="px-3 py-3 text-center align-middle"
+                          style={{
+                            width: SELECT_COLUMN_WIDTH,
+                            borderBottom: '1px solid var(--table-border)',
+                          }}
+                        >
+                          <SelectCheckbox
+                            checked={isSelected}
+                            ariaLabel="Selecionar linha"
+                            onToggle={() => onToggleRow?.(rowId)}
+                          />
+                        </td>
+                      )}
                       {effectiveColumns.map((col) => {
                         const wrapClass = col.allowWrap ? 'whitespace-normal break-words' : 'truncate'
                         return (
@@ -668,6 +775,14 @@ export function DataTable<T>({
                         onMouseLeave={onMouseLeaveRow}
                         data-fee-row="true"
                       >
+                        {selectionEnabled && (
+                          <td
+                            style={{
+                              width: SELECT_COLUMN_WIDTH,
+                              borderBottom: '1px solid var(--table-border)',
+                            }}
+                          />
+                        )}
                         {effectiveColumns.map((col) => {
                           const wrapClass = col.allowWrap ? 'whitespace-normal break-words' : 'truncate'
                           return (
@@ -695,7 +810,7 @@ export function DataTable<T>({
                     {isExpanded && renderRowDetail && (
                       <tr data-expanded-row="true" style={{ backgroundColor: rowBg }}>
                         <td
-                          colSpan={effectiveColumns.length}
+                          colSpan={effectiveColumns.length + (selectionEnabled ? 1 : 0)}
                           style={{ borderBottom: '1px solid var(--table-border)', padding: 0 }}
                         >
                           {renderRowDetail(row)}
