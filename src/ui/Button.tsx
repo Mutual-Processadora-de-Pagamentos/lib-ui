@@ -2,7 +2,7 @@ import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react'
 import { Loader2 } from 'lucide-react'
 import { cn } from '../lib/cn'
 
-type Variant = 'primary' | 'secondary' | 'ghost' | 'destructive' | 'outline'
+type Variant = 'primary' | 'secondary' | 'ghost' | 'destructive' | 'outline' | 'success' | 'warning' | 'info'
 type Size = 'sm' | 'md' | 'lg'
 
 const VARIANT: Record<Variant, string> = {
@@ -16,6 +16,12 @@ const VARIANT: Record<Variant, string> = {
     'bg-[color:var(--destructive)] text-[color:var(--destructive-foreground)] hover:opacity-90 focus-visible:ring-[color:var(--destructive)]',
   outline:
     'bg-transparent text-[color:var(--foreground)] border border-[color:var(--border)] hover:bg-[color:var(--muted)] focus-visible:ring-[color:var(--primary)]',
+  success:
+    'bg-[color:var(--status-success)] text-white hover:opacity-90 focus-visible:ring-[color:var(--status-success)]',
+  warning:
+    'bg-[color:var(--status-warning)] text-white hover:opacity-90 focus-visible:ring-[color:var(--status-warning)]',
+  info:
+    'bg-[color:var(--status-info)] text-white hover:opacity-90 focus-visible:ring-[color:var(--status-info)]',
 }
 
 const SIZE: Record<Size, string> = {
